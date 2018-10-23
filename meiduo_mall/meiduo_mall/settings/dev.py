@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -28,15 +29,17 @@ DEBUG = True
 import sys
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
-for num in range(0, 3):
-    print(sys.path[num])
+print(sys.path)
+# for num in range(0, 3):
+#     print(sys.path[num])
 """
 '/home/python/Desktop/Progect/Django/meiduo/meiduo_mall/meiduo_mall/apps'
 '/home/python/Desktop/Progect/Django/meiduo/meiduo_mall'
 '/home/python/Desktop/Progect/Django/meiduo'
 """
 
-ALLOWED_HOSTS = []
+# 允许访问的域名
+ALLOWED_HOSTS = ['api.meiduo.site', '127.0.0.1', 'localhost', 'www.meiduo.site']
 
 # Application definition
 
@@ -48,12 +51,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'corsheaders',  # 跨域名访问
     'rest_framework',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'verifications.apps.VerificationsConfig',  # 短信验证视图
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'meiduo_mall.urls'
@@ -218,3 +224,12 @@ REST_FRAMEWORK = {
 
 # 告知Django认证系统使用我们自定义的模型类
 AUTH_USER_MODEL = 'users.User'
+
+# CORS
+CORS_ORIGIN_WHITELIST = (
+    '127.0.0.1:8000',
+    'localhost:8080',
+    'www.meiduo.site:8080',
+    'api.meiduo.site:8000'
+)
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
