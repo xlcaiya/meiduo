@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',  # 跨域名访问
+    'corsheaders',  # 允许跨域名访问
     'rest_framework',
     'users.apps.UsersConfig',
     'verifications.apps.VerificationsConfig',  # 短信验证视图
@@ -225,7 +225,7 @@ REST_FRAMEWORK = {
 # 告知Django认证系统使用我们自定义的模型类
 AUTH_USER_MODEL = 'users.User'
 
-# CORS
+# CORS, 允许跨域访问的地址
 CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8000',
     'localhost:8080',

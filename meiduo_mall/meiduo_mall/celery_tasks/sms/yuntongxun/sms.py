@@ -1,9 +1,6 @@
 # -*- coding:utf-8 -*-
 import random
-# 主文件中不支持点语法
-# from .CCPRestSDK import REST
-from .CCPRestSDK import REST
-# from meiduo_mall.utils.yuntongxun.CCPRestSDK import REST
+from .CCPRestSDK import REST    # 主文件中不支持点语法
 
 import ssl
 
@@ -26,28 +23,6 @@ _serverPort = "8883"
 
 # 说明：REST API版本号保持不变
 _softVersion = '2013-12-26'
-
-
-# 云通讯官方提供的发送短信代码实例
-# # 发送模板短信
-# # @param to 手机号码
-# # @param datas 内容数据 格式为数组 例如：{'12','34'}，如不需替换请填 ''
-# # @param $tempId 模板Id
-#
-# def sendTemplateSMS(to, datas, tempId):
-#     # 初始化REST SDK
-#     rest = REST(serverIP, serverPort, softVersion)
-#     rest.setAccount(accountSid, accountToken)
-#     rest.setAppId(appId)
-#
-#     result = rest.sendTemplateSMS(to, datas, tempId)
-#     for k, v in result.iteritems():
-#
-#         if k == 'templateSMS':
-#             for k, s in v.iteritems():
-#                 print '%s:%s' % (k, s)
-#         else:
-#             print '%s:%s' % (k, v)
 
 
 class CCP(object):
@@ -78,6 +53,7 @@ class CCP(object):
 
 
 if __name__ == '__main__':
+    """
     ccp = CCP()
     # 注意： 测试的短信模板编号为1
     # 随机生成验证码
@@ -90,3 +66,5 @@ if __name__ == '__main__':
         print("发送失败")
     print(sms_code)
     # ccp.send_template_sms('13313444381', ['1234', 5], 1)
+    """
+
