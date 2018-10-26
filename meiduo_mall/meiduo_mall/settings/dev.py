@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'corsheaders',  # 允许跨域名访问
     'rest_framework',
     'users.apps.UsersConfig',
-    'verifications.apps.VerificationsConfig',  # 短信验证视图
+    'verifications.apps.VerificationsConfig',  # 短信验证码
+    'oauth.apps.OauthConfig'    # 第三方登录
 ]
 
 MIDDLEWARE = [
@@ -220,6 +221,12 @@ LOGGING = {
 REST_FRAMEWORK = {
     # 异常处理
     'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler',
+    # 配置JWT
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
 }
 
 # 告知Django认证系统使用我们自定义的模型类
@@ -228,8 +235,28 @@ AUTH_USER_MODEL = 'users.User'
 # CORS, 允许跨域访问的地址
 CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8000',
+    'localhost:8000',
+    'www.meiduo.site:8000',
+    'api.meiduo.site:8000',
+
+    '127.0.0.1:8080',
     'localhost:8080',
     'www.meiduo.site:8080',
-    'api.meiduo.site:8000'
+    'api.meiduo.site:8080',
 )
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
+
+# 配置JWT
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),  # 指明token的有效期
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'users.utils.jwt_response_payload_handler',
+}
+# 使用自定义的认证后端 from JWT
+AUTHENTICATION_BACKENDS = [
+    'users.utils.UsernameMobileAuthBackend',
+]
+
+# QQ登录参数
+QQ_CLIENT_ID = '101474184'
+QQ_CLIENT_SECRET = 'c6ce949e04e12ecc909ae6a8b09b637c'
+QQ_REDIRECT_URI = 'http://www.meiduo.site:8080/oauth_callback.html'

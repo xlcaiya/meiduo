@@ -3,7 +3,7 @@ from random import randint
 from django_redis import get_redis_connection
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from celery_tasks.sms import tasks as sms_tasks
+from celery_tasks.sms.tasks import send_sms_code as sms_tasks
 
 # Create your views here.
 

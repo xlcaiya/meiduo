@@ -1,3 +1,4 @@
+var tokens
 var vm = new Vue({
     el: '#app',
     data: {
@@ -37,13 +38,15 @@ var vm = new Vue({
                     localStorage.user_id = response.data.user_id;
                     localStorage.username = response.data.username;
                     localStorage.token = response.data.token;
+                    alert("用户已绑定")
 
                     // 从路径中取出state,引导用户进入登录成功之后的页面
                     var state = this.get_query_string('state');
                     location.href = state;
                 } else {
                     // 用户未绑定
-                    this.access_token = response.data.access_token;
+                    // response是个对象, 通过对象.data.方法名,可以获取值
+                    this.access_token = response.data.access_token;    // eyJhbGciOiJIUzUxMiIsImlhdCI6MTU0MDUyMjkzMSwiZXhwIjoxNTQwNTIzMjMxfQ.eyJvcGVuaWQiOiJGRUUwQzc2MTlFMUMzM0JGNjIxQ0FGQzU3MDM4QTUxQSJ9.yd0afQk8Oodl-KXJhsN7eEmtITgzDnCLvxeSdAOQcBgI0h8AIOOv5kuFFoCEHNYt8KFIusWpy5PDv9OJ3VhqHA
                     this.is_show_waiting = false;
                 }
             })
@@ -149,12 +152,20 @@ var vm = new Vue({
             this.check_phone();
             this.check_sms_code();
 
+            alert("this.access_token")
+            alert(this.password)
+            alert(this.mobile)
+            alert(this.sms_code)
+            alert(this.access_token)
+            alert(tokens)
+
             if (this.error_password == false && this.error_phone == false && this.error_sms_code == false) {
                 axios.post(this.host + '/oauth/qq/user/', {
                     password: this.password,
                     mobile: this.mobile,
                     sms_code: this.sms_code,
                     access_token: this.access_token
+
                 }, {
                     responseType: 'json',
                     withCredentials: true

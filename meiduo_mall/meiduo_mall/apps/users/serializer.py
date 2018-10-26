@@ -2,6 +2,7 @@ import re
 
 from django_redis import get_redis_connection
 from rest_framework import serializers
+from rest_framework_jwt.settings import api_settings
 
 from users.models import User
 
@@ -10,25 +11,26 @@ class CreateUserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(label='确认密码', write_only=True)
     sms_code = serializers.CharField(label='短信验证码', write_only=True)
     allow = serializers.CharField(label='同意协议', write_only=True)
+    token = serializers.CharField(label='登录状态token', read_only=True)  # 增加token字段
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'password2', 'mobile', 'sms_code', 'allow')
+        fields = ('id', 'username', 'password', 'password2', 'mobile', 'sms_code', 'allow', 'token')
         extra_kwargs = {
             'username': {
                 'min_length': 5,
                 'max_length': 20,
                 'error_messages': {
-                    'min_length': '用户名字符长度为5-20',
-                    'max_length': '用户名字符长度为5-20'
+                    'min_length': '仅允许5-20个字符的用户名',
+                    'max_length': '仅允许5-20个字符的用户名'
                 }
             },
             'password': {
                 'min_length': 8,
                 'max_length': 20,
                 'error_messages': {
-                    'min_length': '密码字符长度为8-20',
-                    'max_length': '密码字符长度为8-20'
+                    'min_length': '仅允许5-20个字符的密码',
+                    'max_length': '仅允许5-20个字符的密码'
                 }
             }
         }
@@ -45,7 +47,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         """
         用户协议
         """
-        if value != True:
+        if value != 'true':
             raise serializers.ValidationError('请勾选用户协议')
         return value
 
@@ -59,7 +61,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('两次密码输入不一致')
 
         # 短信验证码
-        redis_con = get_redis_connection['verify']  # 连接到redis数据库
+        redis_con = get_redis_connection('verify')  # 连接到redis数据库
         # 获取用户验证码
         sms_code = redis_con.get('sms_%s' % data['mobile'])  # type: bytes
         if sms_code is None:
@@ -83,5 +85,13 @@ class CreateUserSerializer(serializers.ModelSerializer):
         # 调用Django的认证系统加密密码
         user.set_password(validated_date['password'])
         user.save()
+
+        # 补充生成记录登录状态的token
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
+        user.token = token
+
 
         return user
