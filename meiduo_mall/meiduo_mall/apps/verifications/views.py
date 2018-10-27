@@ -3,7 +3,7 @@ from random import randint
 from django_redis import get_redis_connection
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from celery_tasks.sms.tasks import send_sms_code as sms_tasks
+from celery_tasks.sms.tasks import send_sms_code
 
 # Create your views here.
 
@@ -45,6 +45,8 @@ class SMSCodeView(APIView):
         sms_code_expires = str(60)
         sms_tasks.send_sms_code.delay(mobile, sms_code, sms_code_expires)
         """
+        sms_code_expires = str(60)
+        send_sms_code.delay(mobile, sms_code, sms_code_expires)
 
         # 以下代码演示redis管道pipeline的使用
         pl = redis_conn.pipeline()
@@ -55,7 +57,7 @@ class SMSCodeView(APIView):
 
         # 打印短信验证码
 
-        print(sms_code)  # 测试环境下, 验证码打印到控制台就可以
+        # print(sms_code)  # 测试环境下, 验证码打印到控制台就可以
 
         # 返回结果
         return Response({'message': 'OK'})

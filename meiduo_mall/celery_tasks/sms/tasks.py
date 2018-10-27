@@ -18,8 +18,10 @@ def send_sms_code(mobile, code, expires):
     :param expires: 有效期
     :return: None
     """
-
-    try:
+    logger.info('\n [moblie: %s ] \n [sms_code: %s ] \n [expires: %s ]' % (mobile, code, expires))
+    print('[验证码: %s ]' % code)
+    """上线发送短信, 平时测试打印到控制台
+        try:
         ccp = CCP()
         result = ccp.send_template_sms(mobile, [code, expires], SMS_CODE_TEMP_ID)
     except Exception as e:
@@ -29,3 +31,5 @@ def send_sms_code(mobile, code, expires):
             logger.info("发送验证码[code: %s] 短信[正常][ mobile: %s ]" % (code, mobile))
         else:
             logger.warning("发送验证码短信[失败][ mobile: %s ]" % mobile)
+    """
+

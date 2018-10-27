@@ -3,7 +3,9 @@ from rest_framework_jwt.views import obtain_jwt_token
 from . import views
 
 urlpatterns = [
-    url(r'^email/$', views.EmailView.as_view()),  # 设置邮箱
+    url(r'^emails/verification/$', views.VerifyEmailView.as_view()), # 邮箱验证
+
+    url(r'^emails/$', views.EmailView.as_view()),  # 设置邮箱
 
     url(r'^user/$', views.UserDetailView.as_view()),    # 用户中心个人信息
 

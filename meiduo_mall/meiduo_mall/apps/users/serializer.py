@@ -1,10 +1,12 @@
 import re
 
+from django.conf import settings
+from django.core.mail import send_mail
 from django_redis import get_redis_connection
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
-
 from users.models import User
+from celery_tasks.email_dir.tasks import send_verify_email
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -123,6 +125,21 @@ class EmailSerializer(serializers.ModelSerializer):
         }
 
     def update(self, instance, validated_data):
-        instance.email = validated_data['email']
+
+        email = validated_data['email']
+
+        instance.email = email
         instance.save()
+
+        # 生成验证链接
+        verify_url = instance.generate_verify_email_url()
+        # 发送验证邮件
+        send_verify_email.delay(email, verify_url)
+        # send_mail('天天科技', '注册验证', settings.EMAIL_FROM, [validated_data['email']])
+        # send_mail('天天科技', '注册验证', settings.EMAIL_FROM, [email])
+
+
+
+
+
         return instance
