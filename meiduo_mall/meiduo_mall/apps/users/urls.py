@@ -3,6 +3,10 @@ from rest_framework_jwt.views import obtain_jwt_token
 from . import views
 
 urlpatterns = [
+    url(r'^email/$', views.EmailView.as_view()),  # 设置邮箱
+
+    url(r'^user/$', views.UserDetailView.as_view()),    # 用户中心个人信息
+
     url(r'^users/$', views.UserRegisterView.as_view()),
 
     url(r'^usernames/(?P<username>\w{5,20})/count/$', views.UsernameCountView.as_view()),

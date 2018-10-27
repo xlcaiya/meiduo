@@ -6,7 +6,6 @@ from oauth.utils import check_save_user_token
 from users.models import User
 
 
-
 class QQAuthUserSerializer(serializers.Serializer):
     """
     QQ登录创建用户序列化器

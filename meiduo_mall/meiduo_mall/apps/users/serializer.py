@@ -80,7 +80,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
         del validated_date['password2']
         del validated_date['sms_code']
         del validated_date['allow']
-        user = super().create(validated_date)   # 继承父类方法
+        user = super().create(validated_date)  # 继承父类方法
 
         # 调用Django的认证系统加密密码
         user.set_password(validated_date['password'])
@@ -93,5 +93,36 @@ class CreateUserSerializer(serializers.ModelSerializer):
         token = jwt_encode_handler(payload)
         user.token = token
 
-
         return user
+
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    """
+    from 用户中心个人信息
+    用户详细信息序列化器
+    """
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'mobile', 'email', 'email_active')
+
+
+class EmailSerializer(serializers.ModelSerializer):
+    """
+    from 保存邮箱并发送验证邮件
+    邮箱序列化器
+    """
+
+    class Meta:
+        model = User
+        fields = ('id', 'email')
+        extra_kwargs = {
+            'email': {
+                'required': True
+            }
+        }
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data['email']
+        instance.save()
+        return instance

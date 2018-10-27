@@ -34,7 +34,7 @@ def get_user_by_account(account):
         return user
 
 
-class UsernameMobileAuthBackend(ModelBackend):
+class UsernameMobileAuthBackend(ModelBackend):  # 重写django用户验证方法, 后续增加邮箱登录等，都可以在这里进行补充, 需要在配置文件指明这个类名
     """
     自定义用户名或手机号认证
     """
