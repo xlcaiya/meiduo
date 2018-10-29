@@ -17,12 +17,14 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),   # 管理员
 
     url(r'^', include('users.urls')),
 
     url(r'^sms_codes/', include('verifications.urls')),
 
     url(r'^oauth/', include('oauth.urls'), name='oauth'),
+
+    url(r'^', include('areas.urls')),  # 用户地址
 
 ]

@@ -48,7 +48,7 @@ var vm = new Vue({
                 responseType: 'json'
             })
             .then(response => {
-                this.addresses = response.data;
+                this.addresses = response.data.addresses;   //　前端通过address获取与这个地址相关的用户信息
                 this.limit = response.data.limit;
                 this.default_address_id = response.data.default_address_id;
             })
@@ -61,6 +61,7 @@ var vm = new Vue({
                 }
             })
     },
+
     watch: {
         'form_address.province_id': function(){
             if (this.form_address.province_id) {
@@ -178,7 +179,11 @@ var vm = new Vue({
                         this.is_show_edit = false;
                     })
                     .catch(error => {
-                        console.log(error.response.data);
+                        this.is_show_edit=false;
+                        setTimeout(() =>{
+                            alert(error.response.data.message);
+                        },200);
+                        <!--console.log(error.response.data);-->
                     })
                 } else {
 
