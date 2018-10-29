@@ -152,12 +152,6 @@ var vm = new Vue({
             this.check_phone();
             this.check_sms_code();
 
-            alert("this.access_token")
-            alert(this.password)
-            alert(this.mobile)
-            alert(this.sms_code)
-            alert(this.access_token)
-
             if (this.error_password == false && this.error_phone == false && this.error_sms_code == false) {
                 axios.post(this.host + '/oauth/qq/user/', {
                     password: this.password,
