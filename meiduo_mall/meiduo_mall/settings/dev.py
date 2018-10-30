@@ -56,7 +56,10 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'verifications.apps.VerificationsConfig',  # 短信验证码
     'oauth.apps.OauthConfig',  # 第三方登录
-    'areas.apps.AreasConfig'  # 省市区表
+    'areas.apps.AreasConfig',  # 用户地址
+    'goods.apps.GoodsConfig',  # 商品
+    # 'contents.apps.ContentsConfig'  # 广告
+
 ]
 
 MIDDLEWARE = [
