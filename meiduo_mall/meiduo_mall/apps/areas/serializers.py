@@ -10,5 +10,5 @@ class AreaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Area
-        # fields = ('id', 'name')
-        fields = '__all__'
+        fields = ('id', 'name')
+        # fields = '__all__'

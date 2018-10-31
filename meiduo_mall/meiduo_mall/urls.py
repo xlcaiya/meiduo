@@ -27,4 +27,6 @@ urlpatterns = [
 
     url(r'^', include('areas.urls')),  # 用户地址
 
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),  # 富文本编辑器
+
 ]
