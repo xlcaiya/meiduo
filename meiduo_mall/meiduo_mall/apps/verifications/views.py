@@ -57,7 +57,7 @@ class SMSCodeView(APIView):
 
         # 打印短信验证码
 
-        print(sms_code)  # 测试环境下, 验证码打印到控制台就可以
+        print('sms_code --> %s' % sms_code)  # 测试环境下, 验证码打印到控制台就可以
 
         # 返回结果
         return Response({'message': 'OK'})

@@ -29,7 +29,7 @@ DEBUG = True
 import sys
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
-print(sys.path)
+print('导包路径: %s' % sys.path)
 # for num in range(0, 3):
 #     print(sys.path[num])
 """
@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'ckeditor',  # 富文本编辑器
     'ckeditor_uploader',  # 富文本编辑器上传图片模块
+    'django_crontab',  # 定时任务
 
     # 视图
     'users.apps.UsersConfig',
@@ -86,7 +87,7 @@ ROOT_URLCONF = 'meiduo_mall.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -307,3 +308,13 @@ CKEDITOR_CONFIGS = {
     },
 }
 CKEDITOR_UPLOAD_PATH = ''  # 上传图片保存路径，使用了FastDFS，所以此处设为''
+
+# 生成的静态html文件保存目录
+GENERATED_STATIC_HTML_FILES_DIR = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'front_end_pc')
+print('生成静态文件的目录: %s' % GENERATED_STATIC_HTML_FILES_DIR)
+
+# 定时任务
+CRONJOBS = [
+    # 每5分钟执行一次生成主页静态文件
+    ('*/5 * * * *', 'contents.crons.generate_static_index_html', '>> /home/python/Desktop/Progect/Django/meiduo/meiduo_mall/logs/crontab.log')
+]
