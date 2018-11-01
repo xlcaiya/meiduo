@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'ckeditor',  # 富文本编辑器
     'ckeditor_uploader',  # 富文本编辑器上传图片模块
     'django_crontab',  # 定时任务
+    'haystack',  # 模块化的搜索
 
     # 视图
     'users.apps.UsersConfig',
@@ -66,7 +67,7 @@ INSTALLED_APPS = [
     'oauth.apps.OauthConfig',  # 第三方登录
     'areas.apps.AreasConfig',  # 用户地址
     'goods.apps.GoodsConfig',  # 商品
-    'contents.apps.ContentsConfig'  # 广告
+    'contents.apps.ContentsConfig',  # 广告
 
 ]
 
@@ -239,6 +240,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+    # 分页
+    'DEFAULT_PAGINATION_CLASS': 'meiduo_mall.utils.pagination.StandardResultsSetPagination',
 }
 
 # 告知Django认证系统使用我们自定义的模型类
@@ -316,5 +319,18 @@ print('生成静态文件的目录: %s' % GENERATED_STATIC_HTML_FILES_DIR)
 # 定时任务
 CRONJOBS = [
     # 每5分钟执行一次生成主页静态文件
-    ('*/5 * * * *', 'contents.crons.generate_static_index_html', '>> /home/python/Desktop/Progect/Django/meiduo/meiduo_mall/logs/crontab.log')
+    ('*/5 * * * *', 'contents.crons.generate_static_index_html',
+     '>> /home/python/Desktop/Progect/Django/meiduo/meiduo_mall/logs/crontab.log')
 ]
+
+# Haystack
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://172.17.0.1:9200/',  # 此处为elasticsearch运行的服务器ip地址，端口号固定为9200
+        'INDEX_NAME': 'meiduo',  # 指定elasticsearch建立的索引库的名称
+    },
+}
+
+# 当添加、修改、删除数据时，自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
