@@ -1,9 +1,27 @@
 from rest_framework.filters import OrderingFilter
 from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from .models import SKU
+from .models import SKU, GoodsCategory
 from .serializers import SKUSerializer, SKUIndexSerializer
 from drf_haystack.viewsets import HaystackViewSet
+
+
+class GoodCategorieView(APIView):
+    def get(self, request, category_id):
+        # 获取三级分类对象
+        cat3 = GoodsCategory.objects.get(id=category_id)
+        # 获取二级分类对象和一级分类对象
+        cat2 = cat3.parent
+        cat1 = cat2.parent
+
+        return Response({
+            'cat1': cat1.name,
+            'cat2': cat2.name,
+            'cat3': cat3.name,
+
+        })
 
 
 class SKUListView(ListAPIView):
