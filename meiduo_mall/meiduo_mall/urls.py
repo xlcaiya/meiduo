@@ -31,4 +31,6 @@ urlpatterns = [
 
     url(r'^', include('goods.urls')),  # 商品搜索
 
+    url(r'^', include('carts.urls')),  # 购物车
+
 ]

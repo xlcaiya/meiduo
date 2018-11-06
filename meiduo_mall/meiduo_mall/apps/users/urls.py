@@ -16,7 +16,7 @@ urlpatterns = [
 
     url(r'^mobiles/(?P<mobile>1[3-9]\d{9})/count/$', views.MobileCountView.as_view()),
 
-    url(r'^authorizations/$', obtain_jwt_token),
+    url(r'^authorizations/$', views.UserAuthorizeView.as_view()),   # 用户认证
 
     url(r'browse_histories/$', views.UserBrowsingHistoryView.as_view()),
 

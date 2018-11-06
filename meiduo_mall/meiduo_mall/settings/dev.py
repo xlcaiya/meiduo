@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'haystack',  # 模块化的搜索
 
     # 视图
-    'users.apps.UsersConfig',
+    'users.apps.UsersConfig',   # 用户
     'verifications.apps.VerificationsConfig',  # 短信验证码
     'oauth.apps.OauthConfig',  # 第三方登录
     'areas.apps.AreasConfig',  # 用户地址
@@ -188,6 +188,14 @@ CACHES = {
     "history": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/3",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    # 保存购物车数据
+    "cart": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/4",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
