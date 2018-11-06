@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 # Create your tests here.
+"""
 import pickle
 
 data =  pickle.dumps('sdafasdfsda')
@@ -18,3 +19,5 @@ tjs = TJS('sdafasdfasdf', 300)
 
 # 使用的是 JSONWebSignatureSerializer 里的 dumps进行加密
 tjs.dumps('dfsafasdf')
+
+"""

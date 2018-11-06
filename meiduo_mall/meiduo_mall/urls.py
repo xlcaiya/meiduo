@@ -19,6 +19,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),   # 管理员
 
+
+
     url(r'^', include('users.urls')),
 
     url(r'^sms_codes/', include('verifications.urls')),
@@ -32,5 +34,7 @@ urlpatterns = [
     url(r'^', include('goods.urls')),  # 商品搜索
 
     url(r'^', include('carts.urls')),  # 购物车
+
+    url(r'^', include('orders.urls')),  # 订单详情
 
 ]

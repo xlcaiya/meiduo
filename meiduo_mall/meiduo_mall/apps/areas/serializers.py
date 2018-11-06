@@ -12,3 +12,4 @@ class AreaSerializer(serializers.ModelSerializer):
         model = Area
         fields = ('id', 'name')
         # fields = '__all__'
+

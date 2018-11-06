@@ -1,8 +1,8 @@
 from django_redis import get_redis_connection
 from rest_framework import serializers
 
-from oauth.models import OAuthQQUser
-from oauth.utils import check_save_user_token
+from .models import OAuthQQUser
+from .utils import check_save_user_token
 from users.models import User
 
 

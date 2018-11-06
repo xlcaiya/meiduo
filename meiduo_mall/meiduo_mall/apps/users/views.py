@@ -75,6 +75,7 @@ class AddressViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, GenericVi
     """
     serializer_class = UserAddressSerializer
     permissions = [IsAuthenticated]
+    # pagination_class = None
 
     def get_queryset(self):
         return self.request.user.addresses.filter(is_deleted=False)

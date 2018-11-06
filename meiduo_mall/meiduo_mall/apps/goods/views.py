@@ -3,12 +3,14 @@ from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from meiduo_mall.utils.pagination import StandardResultsSetPagination
 from .models import SKU, GoodsCategory
 from .serializers import SKUSerializer, SKUIndexSerializer
 from drf_haystack.viewsets import HaystackViewSet
 
 
 class GoodCategorieView(APIView):
+
     def get(self, request, category_id):
         # 获取三级分类对象
         cat3 = GoodsCategory.objects.get(id=category_id)
@@ -29,6 +31,7 @@ class SKUListView(ListAPIView):
     sku列表数据
     """
     serializer_class = SKUSerializer
+    pagination_class = StandardResultsSetPagination  # 分页
     filter_backends = (OrderingFilter,)
     ordering_fields = ('create_time', 'price', 'sales')
 

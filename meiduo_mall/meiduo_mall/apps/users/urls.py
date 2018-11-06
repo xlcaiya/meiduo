@@ -28,7 +28,6 @@ urlpatterns = [
 
 
 ]
-
 router = routers.DefaultRouter()
 router.register(r'addresses', views.AddressViewSet, base_name='addresses')
 

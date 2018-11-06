@@ -6,9 +6,9 @@ from rest_framework.views import APIView
 from rest_framework_jwt.settings import api_settings
 
 from carts.utils import merge_cart_cookie_to_redis
-from oauth import serializers
-from oauth.models import OAuthQQUser
-from oauth.utils import generate_save_user_token
+from . import serializers
+from .models import OAuthQQUser
+from .utils import generate_save_user_token
 
 from django.conf import settings
 
