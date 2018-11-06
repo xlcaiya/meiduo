@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'goods.apps.GoodsConfig',  # 商品
     'contents.apps.ContentsConfig',  # 广告
     'orders.apps.OrdersConfig', # 订单详情
+    'payment.apps.PaymentConfig' # 支付宝
 
 ]
 
@@ -303,12 +304,12 @@ EMAIL_HOST_PASSWORD = 'xl888888'
 EMAIL_FROM = '美多商城<13271176636@163.com>'
 
 # DRF扩展
-# REST_FRAMEWORK_EXTENSIONS = {
-#     # 缓存时间
-#     'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 60,  # DEFAULT_CACHE_RESPONSE_TIMEOUT 缓存有效期，单位秒
-#     # 缓存存储
-#     'DEFAULT_USE_CACHE': 'default',  # DEFAULT_USE_CACHE 缓存的存储方式，与配置文件中的CACHES的键对应。
-# }
+REST_FRAMEWORK_EXTENSIONS = {
+    # 缓存时间
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 3600,  # DEFAULT_CACHE_RESPONSE_TIMEOUT 缓存有效期，单位秒
+    # 缓存存储
+    'DEFAULT_USE_CACHE': 'default',  # DEFAULT_USE_CACHE 缓存的存储方式，与配置文件中的CACHES的键对应。
+}
 
 # django文件存储
 DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fastdfs.fdfs_storage.FastDFSStorage'

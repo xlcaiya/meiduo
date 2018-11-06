@@ -44,18 +44,6 @@ var vm = new Vue({
                 location.href = '/index.html';
             } else {
                 // 发起支付
-                axios.get(this.host+'/orders/'+this.order_id+'/payment/', {
-                        headers: {
-                            'Authorization': 'JWT ' + this.token
-                        },
-                        responseType: 'json'
-                    })
-                    .then(response => {
-                        location.href = response.data.alipay_url;
-                    })
-                    .catch(error => {
-                        console.log(error.response.data);
-                    })
 
             }
         }
