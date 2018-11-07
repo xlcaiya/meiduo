@@ -35,4 +35,6 @@ urlpatterns = [
 
     url(r'^', include('orders.urls')),  # 订单详情
 
+    url(r'^', include('payment.urls')),  # 第三方支付: 支付宝
+
 ]

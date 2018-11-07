@@ -6,9 +6,6 @@ from meiduo_mall.utils.models import BaseModel
 from orders.models import OrderInfo
 
 
-# Create your models here.
-
-
 class Payment(BaseModel):
     """
     支付信息

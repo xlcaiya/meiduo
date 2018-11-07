@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kud0g46d%q(f^-bd$zy7+=s7$t$te8=_*3xqqe4f)uabnx=6li'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # 开发环境设置为True
 
 # 添加导包路径
 import sys
@@ -62,14 +62,14 @@ INSTALLED_APPS = [
     'haystack',  # 模块化的搜索
 
     # 视图
-    'users.apps.UsersConfig',   # 用户
+    'users.apps.UsersConfig',  # 用户
     'verifications.apps.VerificationsConfig',  # 短信验证码
     'oauth.apps.OauthConfig',  # 第三方登录
     'areas.apps.AreasConfig',  # 用户地址
     'goods.apps.GoodsConfig',  # 商品
     'contents.apps.ContentsConfig',  # 广告
-    'orders.apps.OrdersConfig', # 订单详情
-    'payment.apps.PaymentConfig' # 支付宝
+    'orders.apps.OrdersConfig',  # 订单详情
+    'payment.apps.PaymentConfig',  # 支付宝
 
 ]
 
@@ -120,7 +120,15 @@ DATABASES = {
         'USER': 'meiduo',  # 数据库用户名
         'PASSWORD': 'meiduo',  # 数据库用户密码
         'NAME': 'meiduo_mall'  # 数据库名字
-    }
+    },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '127.0.0.1',
+        'PORT': 8306,
+        'USER': 'root',
+        'PASSWORD': 'mysql',
+        'NAME': 'meiduo_mall'
+    },
 }
 
 # Password validation
@@ -274,6 +282,8 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:8080',
     'www.meiduo.site:8080',
     'api.meiduo.site:8080',
+
+    'www.meiduo.site:80',
 )
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
 
@@ -350,3 +360,12 @@ HAYSTACK_CONNECTIONS = {
 
 # 当添加、修改、删除数据时，自动生成索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+ALIPAY_APPID = "2016092000555832"
+ALIPAY_URL = "https://openapi.alipaydev.com/gateway.do"
+ALIPAY_DEBUG = True
+
+# 配置读写分离
+DATABASE_ROUTERS = ['meiduo_mall.utils.db_router.MasterSlaveDBRouter']
+
+STATIC_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'front_end_pc/static')
